@@ -16,6 +16,8 @@ github.com/iGuessImaDev/go_lib_response v0.0.2 h1:vSE+ChXLwFYmI1Qk7zzODQp35zYS8C
 github.com/iGuessImaDev/go_lib_response v0.0.2/go.mod h1:76YFZOJdq8+mx340C07cZDzqSOl52Si6/mpv/ZZF0nQ=
 github.com/iGuessImaDev/gocourse_domain v0.0.1 h1:9nrqnl/8QzIJDGYGpqpGr2lwphrqdAwzGQOwstCJjLg=
 github.com/iGuessImaDev/gocourse_domain v0.0.1/go.mod h1:uQS86B84PdFbCfCFzdjZIc8mx3KNIeLbGNpxt1++U40=
+github.com/iGuessImaDev/gocourse_domain v0.0.2 h1:BjCiXUZKl6v2YwggeS/MunQ1XGroLyfsrsGwRRzqMOY=
+github.com/iGuessImaDev/gocourse_domain v0.0.2/go.mod h1:uQS86B84PdFbCfCFzdjZIc8mx3KNIeLbGNpxt1++U40=
 github.com/iGuessImaDev/gocourse_meta v0.0.1 h1:hf9bN9nMIUyTH+uU/fwCAqeuHAjUwqmuBMd4iLW56eo=
 github.com/iGuessImaDev/gocourse_meta v0.0.1/go.mod h1:ZQk+JPbc8MR4evE5Mn9/b/psH00CAt0UfZUl26ZAy4c=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=

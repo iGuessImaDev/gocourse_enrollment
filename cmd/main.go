@@ -32,7 +32,7 @@ func main() {
 	enrollmentRepo := enrollment.NewRepo(db, l)
 	enrollmentSrv := enrollment.NewService(l, enrollmentRepo)
 
-	h := handler.NewEnrollmentHTTPServer(ctx, enrollment.MakeEndpoints(enrollmentSrv))
+	h := handler.NewEnrollmentHTTPServer(ctx, enrollment.MakeEndpoints(enrollmentSrv, enrollment.Config{LimPageDef: pagLimDef}))
 
 	port := os.Getenv("PORT")
 	address := fmt.Sprintf("127.0.0.1:%s", port)

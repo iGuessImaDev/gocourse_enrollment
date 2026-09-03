@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
@@ -22,19 +23,62 @@ func NewEnrollmentHTTPServer(ctx context.Context, endpoints enrollment.Endpoints
 
 	r.Handle("/enrollments", httptransport.NewServer(
 		endpoint.Endpoint(endpoints.Create),
-		decodeStoreCourse,
+		decodeStoreEnrollment,
 		encodeResponse,
 		opts...,
 	)).Methods("POST")
 
+	r.Handle("/enrollments", httptransport.NewServer(
+		endpoint.Endpoint(endpoints.GetAll),
+		decodeGetAllEnrollment,
+		encodeResponse,
+		opts...,
+	)).Methods("GET")
+
+	r.Handle("/enrollments/{id}", httptransport.NewServer(
+		endpoint.Endpoint(endpoints.Update),
+		decodeUpdateEnrollment,
+		encodeResponse,
+		opts...,
+	)).Methods("PATCH")
+
 	return r
 }
 
-func decodeStoreCourse(_ context.Context, r *http.Request) (interface{}, error) {
+func decodeStoreEnrollment(_ context.Context, r *http.Request) (interface{}, error) {
 	var req enrollment.CreateReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return nil, response.BadRequestError(fmt.Sprintf("invalid request format: '%v'", err.Error()))
 	}
+
+	return req, nil
+}
+
+func decodeGetAllEnrollment(_ context.Context, r *http.Request) (interface{}, error) {
+	v := r.URL.Query()
+
+	limit, _ := strconv.Atoi(v.Get("limit"))
+	page, _ := strconv.Atoi(v.Get("page"))
+
+	req := enrollment.GetAllReq{
+		UserID:   v.Get("user_id"),
+		CourseID: v.Get("course_id"),
+		Limit:    limit,
+		Page:     page,
+	}
+
+	return req, nil
+}
+
+func decodeUpdateEnrollment(_ context.Context, r *http.Request) (interface{}, error) {
+	var req enrollment.UpdateReq
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		return nil, response.BadRequestError(fmt.Sprintf("invalid request format: '%v'", err.Error()))
+	}
+
+	path := mux.Vars(r)
+	req.ID = path["id"]
 
 	return req, nil
 }
