@@ -6,6 +6,9 @@ import (
 
 	"github.com/iGuessImaDev/go_lib_response/response"
 	"github.com/iGuessImaDev/gocourse_meta/meta"
+
+	courseSdk "github.com/iGuessImaDev/go_course_sdk/course"
+	userSdk "github.com/iGuessImaDev/go_course_sdk/user"
 )
 
 type (
@@ -61,6 +64,11 @@ func makeCreateEndpoint(s Service) Controller {
 
 		enroll, err := s.Create(ctx, req.UserID, req.CourseID)
 		if err != nil {
+			if errors.As(err, &userSdk.ErrNotFound{}) ||
+				errors.As(err, &courseSdk.ErrNotFound{}) {
+				return nil, response.NotFoundError(err.Error())
+			}
+
 			return nil, response.InternalServerError(err.Error())
 		}
 
@@ -110,6 +118,9 @@ func makeUpdateEndpoint(s Service) Controller {
 		if err != nil {
 			if errors.As(err, &ErrNotFound{}) {
 				return nil, response.NotFoundError(err.Error())
+			}
+			if errors.As(err, &ErrInvalidStatus{}) {
+				return nil, response.BadRequestError(err.Error())
 			}
 			return nil, response.InternalServerError(err.Error())
 		}

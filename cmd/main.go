@@ -8,6 +8,8 @@ import (
 	"os"
 	"time"
 
+	courseSdk "github.com/iGuessImaDev/go_course_sdk/course"
+	userSdk "github.com/iGuessImaDev/go_course_sdk/user"
 	"github.com/iGuessImaDev/gocourse_enrollment/internal/enrollment"
 	"github.com/iGuessImaDev/gocourse_enrollment/pkg/bootstrap"
 	"github.com/iGuessImaDev/gocourse_enrollment/pkg/handler"
@@ -28,9 +30,12 @@ func main() {
 		l.Fatal("paginator limit default is required")
 	}
 
+	courseTrans := courseSdk.NewHTTPClient(os.Getenv("API_COURSE_URL"), "")
+	userTrans := userSdk.NewHTTPClient(os.Getenv("API_USER_URL"), "")
+
 	ctx := context.Background()
 	enrollmentRepo := enrollment.NewRepo(db, l)
-	enrollmentSrv := enrollment.NewService(l, enrollmentRepo)
+	enrollmentSrv := enrollment.NewService(l, userTrans, courseTrans, enrollmentRepo)
 
 	h := handler.NewEnrollmentHTTPServer(ctx, enrollment.MakeEndpoints(enrollmentSrv, enrollment.Config{LimPageDef: pagLimDef}))
 

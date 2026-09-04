@@ -6,9 +6,14 @@ require (
 	github.com/go-kit/kit v0.13.0
 	github.com/gorilla/mux v1.8.1
 	github.com/iGuessImaDev/go_lib_response v0.0.2
-	github.com/iGuessImaDev/gocourse_domain v0.0.2
+	github.com/iGuessImaDev/gocourse_domain v0.0.3
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.2
+)
+
+require (
+	github.com/iGuessImaDev/go_course_sdk v0.0.3
+	github.com/ncostamagna/go_http_client v0.0.3 // indirect
 )
 
 require (
@@ -17,7 +22,7 @@ require (
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/iGuessImaDev/gocourse_meta v0.0.1 // indirect
+	github.com/iGuessImaDev/gocourse_meta v0.0.1
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/joho/godotenv v1.5.1

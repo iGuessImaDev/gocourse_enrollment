@@ -16,3 +16,11 @@ type ErrNotFound struct {
 func (e ErrNotFound) Error() string {
 	return fmt.Sprintf("enrollment '%s' doesn't exist", e.enrollmentID)
 }
+
+type ErrInvalidStatus struct {
+	Status string
+}
+
+func (e ErrInvalidStatus) Error() string {
+	return fmt.Sprintf("invalid '%s' status", e.Status)
+}

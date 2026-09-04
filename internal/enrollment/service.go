@@ -4,6 +4,8 @@ import (
 	"context"
 	"log"
 
+	courseSdk "github.com/iGuessImaDev/go_course_sdk/course"
+	userSdk "github.com/iGuessImaDev/go_course_sdk/user"
 	"github.com/iGuessImaDev/gocourse_domain/domain"
 )
 
@@ -21,15 +23,19 @@ type (
 	}
 
 	service struct {
-		log  *log.Logger
-		repo Repository
+		log         *log.Logger
+		UserTrans   userSdk.Transport
+		CourseTrans courseSdk.Transport
+		repo        Repository
 	}
 )
 
-func NewService(l *log.Logger, repo Repository) Service {
+func NewService(l *log.Logger, userTrans userSdk.Transport, courseTrans courseSdk.Transport, repo Repository) Service {
 	return &service{
-		log:  l,
-		repo: repo,
+		log:         l,
+		UserTrans:   userTrans,
+		CourseTrans: courseTrans,
+		repo:        repo,
 	}
 }
 
@@ -37,7 +43,15 @@ func (s service) Create(ctx context.Context, userID, courseID string) (*domain.E
 	enroll := domain.Enrollment{
 		UserID:   userID,
 		CourseID: courseID,
-		Status:   "P",
+		Status:   domain.Pending,
+	}
+
+	if _, err := s.UserTrans.Get(userID); err != nil {
+		return nil, err
+	}
+
+	if _, err := s.CourseTrans.Get(courseID); err != nil {
+		return nil, err
 	}
 
 	if err := s.repo.Create(ctx, &enroll); err != nil {
@@ -59,6 +73,14 @@ func (s service) GetAll(ctx context.Context, filters Filters, offset, limit int)
 }
 
 func (s service) Update(ctx context.Context, id string, status *string) error {
+
+	if status != nil {
+		switch domain.EnrollStatus(*status) {
+		case domain.Pending, domain.Active, domain.Studying, domain.Inactive:
+		default:
+			return ErrInvalidStatus{*status}
+		}
+	}
 
 	if err := s.repo.Update(ctx, id, status); err != nil {
 		return err
