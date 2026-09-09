@@ -10,11 +10,11 @@ var ErrCourseIDRequired = errors.New("Course ID is required")
 var ErrStatusRequired = errors.New("status is required")
 
 type ErrNotFound struct {
-	enrollmentID string
+	EnrollmentID string
 }
 
 func (e ErrNotFound) Error() string {
-	return fmt.Sprintf("enrollment '%s' doesn't exist", e.enrollmentID)
+	return fmt.Sprintf("enrollment '%s' doesn't exist", e.EnrollmentID)
 }
 
 type ErrInvalidStatus struct {
