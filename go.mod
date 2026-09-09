@@ -16,7 +16,7 @@ require go.yaml.in/yaml/v3 v3.0.5 // indirect
 
 require (
 	github.com/iGuessImaDev/go_course_sdk v0.0.5
-	github.com/ncostamagna/go_http_client v0.0.3 // indirect
+	github.com/ncostamagna/go_http_client v0.0.3
 )
 
 require (
