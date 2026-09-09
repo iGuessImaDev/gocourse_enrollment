@@ -7,12 +7,15 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/iGuessImaDev/go_lib_response v0.0.2
 	github.com/iGuessImaDev/gocourse_domain v0.0.3
+	github.com/stretchr/testify v1.12.1
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.2
 )
 
+require go.yaml.in/yaml/v3 v3.0.5 // indirect
+
 require (
-	github.com/iGuessImaDev/go_course_sdk v0.0.3
+	github.com/iGuessImaDev/go_course_sdk v0.0.5
 	github.com/ncostamagna/go_http_client v0.0.3 // indirect
 )
 

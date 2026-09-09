@@ -34,7 +34,6 @@ func (repo *repo) Create(ctx context.Context, enroll *domain.Enrollment) error {
 		repo.log.Println(err)
 		return err
 	}
-	repo.log.Println("enrollment created with id ", enroll.ID)
 	return nil
 }
 

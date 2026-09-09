@@ -59,6 +59,7 @@ func (s service) Create(ctx context.Context, userID, courseID string) (*domain.E
 		return nil, err
 	}
 
+	s.log.Println("[SUCCESS] Service - Create - enrollments")
 	return &enroll, nil
 }
 
@@ -69,6 +70,8 @@ func (s service) GetAll(ctx context.Context, filters Filters, offset, limit int)
 		s.log.Println(err)
 		return nil, err
 	}
+
+	s.log.Println("[SUCCESS] Service - GetAll - enrollments")
 	return enrollments, nil
 }
 
@@ -85,6 +88,8 @@ func (s service) Update(ctx context.Context, id string, status *string) error {
 	if err := s.repo.Update(ctx, id, status); err != nil {
 		return err
 	}
+
+	s.log.Println("[SUCCESS] Service - Update - enrollments")
 	return nil
 }
 
